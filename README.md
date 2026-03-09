@@ -47,8 +47,8 @@ git push origin {ваша-ветка}
 
 | Синдикат | Координатор | GitHub |
 |----------|-------------|--------|
-| Forge | TBD | TBD |
-| Interface | TBD | TBD |
+| Forge | Ульяна | @Ulyanayou |
+| Interface | Щаврин | @shchavr |
 | QA Corps | TBD | TBD |
 
 ## Домены B2C (блоки для claim)
