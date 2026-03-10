@@ -797,7 +797,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-
+  
   /api/v1/collections/{collection_id}/products:
     get:
       tags:
@@ -921,7 +921,6 @@ paths:
               example:
                 code: "B2B_UNAVAILABLE"
                 message: "Сервис товаров временно недоступен, попробуйте позже"
-
 
 components:
   schemas:
@@ -1311,7 +1310,7 @@ components:
       required:
         - code
         - message
-    
+
     # ----- СХЕМЫ ДЛЯ ПОДБОРОК (COLLECTIONS) ТОВАРОВ -----
 
     Category:
@@ -1410,6 +1409,7 @@ components:
         - category
         - images
         - skus
+
     CollectionProductsResponse:
       type: object
       properties:
