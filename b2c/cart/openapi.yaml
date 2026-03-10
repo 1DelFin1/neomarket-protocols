@@ -309,7 +309,7 @@ paths:
   /api/v1/favorites/{product_id}/subscribe:
     post:
       tags:
-        - Subscriptions
+        - Подписка
       summary: Подписка на уведомления о товаре
       description: >
         Создаёт подписку для текущего пользователя на уведомления
@@ -876,7 +876,7 @@ paths:
   /api/v1/cart/also_bought:
     get:
       tags:
-        - Cart
+        - Корзина
       summary: Получить рекомендации "покупают вместе"
       description: |
         Возвращает список товаров, которые покупали другие пользователи,
@@ -885,9 +885,6 @@ paths:
         Корзина определяется по пользователю из JWT токена.
 
         Если рекомендации отсутствуют, возвращается пустой массив.
-
-      security:
-        - bearerAuth: []
 
       parameters:
         - in: query
@@ -1381,7 +1378,7 @@ components:
     AlsoBoughtResponse:
       type: object
       required:
-        - recommendedProductIds
+        - recommended_product_ids
       properties:
         recommendedProductIds:
           type: array
