@@ -797,6 +797,81 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  
+  # ========== ПОДБОРКИ ==========
+  /api/v1/collections/{collection_id}/products:
+    get:
+      tags:
+        - Подборки
+      summary: Получение списка товаров из подборки
+      description: |
+        Возвращает список товаров, входящих в конкретную подборку
+        (например "Хиты продаж").
+
+        Сервис хранит идентификаторы товаров в подборке и обращается
+        к B2B каталогу товаров для получения актуальной информации.
+
+        Если B2B сервис недоступен — возвращается ошибка 503.
+
+        Товары, отсутствующие в каталоге B2B, исключаются из списка
+        `items`, а их идентификаторы возвращаются в `unavailable_ids`.
+
+      parameters:
+        - name: collection_id
+          in: path
+          required: true
+          description: Идентификатор подборки
+          schema:
+            type: string
+            example: "col-002"
+
+        - name: limit
+          in: query
+          required: false
+          description: Максимальное количество товаров в ответе
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+
+        - name: offset
+          in: query
+          required: false
+          description: Смещение для пагинации
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+
+      responses:
+        "200":
+          description: Успешное получение списка товаров подборки
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CollectionProductsResponse"
+
+        "400":
+          description: Невалидные параметры запроса
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+        "404":
+          description: Подборка не найдена
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+        "503":
+          description: B2B сервис временно недоступен
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
 components:
   schemas:
@@ -1186,3 +1261,39 @@ components:
       required:
         - code
         - message
+
+    # ----- СХЕМЫ ДЛЯ ПОДБОРОК  продутов-----
+
+    CollectionProductsResponse:
+      type: object
+      properties:
+
+        collection_title:
+          type: string
+          description: Название подборки
+          example: "Хиты продаж"
+
+        total_products:
+          type: integer
+          description: Общее количество товаров в подборке
+          example: 134
+
+        items:
+          type: array
+          description: Список товаров из подборки
+          items:
+            $ref: "#/components/schemas/Product"
+
+        unavailable_ids:
+          type: array
+          description: ID товаров, которые не удалось получить из B2B
+          items:
+            type: integer
+          example:
+            - 999
+            - 1001
+
+      required:
+        - collection_title
+        - total_products
+        - items
