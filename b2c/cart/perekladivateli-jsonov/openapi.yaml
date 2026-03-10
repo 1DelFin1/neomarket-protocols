@@ -129,12 +129,6 @@ paths:
                 message: "Сервис временно недоступен, попробуйте позже"
 
 components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-
   schemas:
     SubscribeRequest:
       type: object
